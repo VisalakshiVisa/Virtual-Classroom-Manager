@@ -1,12 +1,14 @@
 import java.util.*;
 
+// Main class managing the overall functionality of the Virtual Classroom Manager
 public class Main {
-    private Map<String, Classroom> classrooms;
+    private Map<String, Classroom> classrooms; // Stores the classrooms with their names as keys
 
     public Main() {
-        classrooms = new HashMap<>();
+        classrooms = new HashMap<>(); // Initialize the classrooms map
     }
 
+    // Method to add a new classroom
     public void addClassroom(String name) {
         if (classrooms.containsKey(name)) {
             System.out.println("Classroom \"" + name + "\" already exists.");
@@ -16,6 +18,7 @@ public class Main {
         }
     }
 
+    // Method to add a student to a classroom
     public void addStudent(String id, String name, String className) {
         Classroom classroom = classrooms.get(className);
         if (classroom != null) {
@@ -26,6 +29,7 @@ public class Main {
         }
     }
 
+    // Method to schedule an assignment for a classroom
     public void scheduleAssignment(String className, String details) {
         Classroom classroom = classrooms.get(className);
         if (classroom != null) {
@@ -36,6 +40,7 @@ public class Main {
         }
     }
 
+    // Method for a student to submit an assignment
     public void submitAssignment(String studentId, String className, String assignmentDetails) {
         Classroom classroom = classrooms.get(className);
         if (classroom != null) {
@@ -53,6 +58,7 @@ public class Main {
         }
     }
 
+    // Method to list all available classrooms
     public void listClassrooms() {
         if (classrooms.isEmpty()) {
             System.out.println("No classrooms available.");
@@ -62,6 +68,7 @@ public class Main {
         }
     }
 
+    // Method to list all students in a specific classroom
     public void listStudentsInClassroom(String className) {
         Classroom classroom = classrooms.get(className);
         if (classroom != null) {
@@ -77,6 +84,7 @@ public class Main {
         }
     }
 
+    // Main method: entry point of the application
     public static void main(String[] args) {
         Main manager = new Main();
         Scanner scanner = new Scanner(System.in);
@@ -143,10 +151,11 @@ public class Main {
     }
 }
 
+// Classroom class representing a virtual classroom
 class Classroom {
-    private String name;
-    private List<Student> students;
-    private List<Assignment> assignments;
+    private String name; // Name of the classroom
+    private List<Student> students; // List of students in the classroom
+    private List<Assignment> assignments; // List of assignments for the classroom
 
     public Classroom(String name) {
         this.name = name;
@@ -167,9 +176,10 @@ class Classroom {
     }
 }
 
+// Student class representing a student
 class Student {
-    private String id;
-    private String name;
+    private String id; // Student ID
+    private String name; // Student name
 
     public Student(String id, String name) {
         this.id = id;
@@ -185,9 +195,10 @@ class Student {
     }
 }
 
+// Assignment class representing an assignment in a classroom
 class Assignment {
-    private String details;
-    private Set<String> submittedStudents;
+    private String details; // Details of the assignment
+    private Set<String> submittedStudents; // Set of student IDs who have submitted the assignment
 
     public Assignment(String details) {
         this.details = details;
@@ -206,3 +217,4 @@ class Assignment {
         return submittedStudents;
     }
 }
+
