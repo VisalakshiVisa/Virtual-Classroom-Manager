@@ -1,13 +1,14 @@
 import java.util.*;
 
+// Main class managing the overall functionality of the Virtual Classroom Manager
 public class Main {
-    private Map<String, Classroom> classrooms;
+    private Map<String, Classroom> classrooms; // Stores the classrooms with their names as keys
 
     public Main() {
-        classrooms = new HashMap<>();
+        classrooms = new HashMap<>(); // Initialize the classrooms map
     }
 
-    // Add a new classroom
+    // Method to add a new classroom
     public void addClassroom(String name) {
         if (classrooms.containsKey(name)) {
             System.out.println("Classroom \"" + name + "\" already exists.");
@@ -17,17 +18,7 @@ public class Main {
         }
     }
 
-    // Remove an existing classroom
-    public void removeClassroom(String name) {
-        if (classrooms.containsKey(name)) {
-            classrooms.remove(name);
-            System.out.println("Classroom \"" + name + "\" has been removed.");
-        } else {
-            System.out.println("Classroom \"" + name + "\" does not exist.");
-        }
-    }
-
-    // Add a student to a classroom
+    // Method to add a student to a classroom
     public void addStudent(String id, String name, String className) {
         Classroom classroom = classrooms.get(className);
         if (classroom != null) {
@@ -38,22 +29,7 @@ public class Main {
         }
     }
 
-    // Remove a student from a classroom
-    public void removeStudent(String id, String className) {
-        Classroom classroom = classrooms.get(className);
-        if (classroom != null) {
-            boolean removed = classroom.removeStudent(id);
-            if (removed) {
-                System.out.println("Student with ID " + id + " has been removed from \"" + className + "\".");
-            } else {
-                System.out.println("Student with ID " + id + " not found in \"" + className + "\".");
-            }
-        } else {
-            System.out.println("Classroom \"" + className + "\" does not exist.");
-        }
-    }
-
-    // Schedule an assignment for a classroom
+    // Method to schedule an assignment for a classroom
     public void scheduleAssignment(String className, String details) {
         Classroom classroom = classrooms.get(className);
         if (classroom != null) {
@@ -64,7 +40,7 @@ public class Main {
         }
     }
 
-    // Submit an assignment by a student
+    // Method for a student to submit an assignment
     public void submitAssignment(String studentId, String className, String assignmentDetails) {
         Classroom classroom = classrooms.get(className);
         if (classroom != null) {
@@ -82,7 +58,7 @@ public class Main {
         }
     }
 
-    // List all classrooms
+    // Method to list all available classrooms
     public void listClassrooms() {
         if (classrooms.isEmpty()) {
             System.out.println("No classrooms available.");
@@ -92,7 +68,7 @@ public class Main {
         }
     }
 
-    // List all students in a classroom
+    // Method to list all students in a specific classroom
     public void listStudentsInClassroom(String className) {
         Classroom classroom = classrooms.get(className);
         if (classroom != null) {
@@ -108,13 +84,13 @@ public class Main {
         }
     }
 
-    // Main method to run the application
+    // Main method: entry point of the application
     public static void main(String[] args) {
         Main manager = new Main();
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to the Virtual Classroom Manager!");
-        System.out.println("Commands: add_classroom, remove_classroom, add_student, remove_student, schedule_assignment, submit_assignment, list_classrooms, list_students, exit");
+        System.out.println("Commands: add_classroom, add_student, schedule_assignment, submit_assignment, list_classrooms, list_students, exit");
 
         while (true) {
             System.out.print("Enter command: ");
@@ -131,11 +107,6 @@ public class Main {
                     String className = scanner.nextLine().trim();
                     manager.addClassroom(className);
                     break;
-                case "remove_classroom":
-                    System.out.print("Enter classroom name: ");
-                    className = scanner.nextLine().trim();
-                    manager.removeClassroom(className);
-                    break;
                 case "add_student":
                     System.out.print("Enter student ID: ");
                     String studentId = scanner.nextLine().trim();
@@ -144,13 +115,6 @@ public class Main {
                     System.out.print("Enter classroom name: ");
                     className = scanner.nextLine().trim();
                     manager.addStudent(studentId, studentName, className);
-                    break;
-                case "remove_student":
-                    System.out.print("Enter student ID: ");
-                    studentId = scanner.nextLine().trim();
-                    System.out.print("Enter classroom name: ");
-                    className = scanner.nextLine().trim();
-                    manager.removeStudent(studentId, className);
                     break;
                 case "schedule_assignment":
                     System.out.print("Enter classroom name: ");
@@ -178,7 +142,7 @@ public class Main {
                     break;
                 default:
                     System.out.println("Unknown command. Please try again.");
-                    System.out.println("Available commands: add_classroom, remove_classroom, add_student, remove_student, schedule_assignment, submit_assignment, list_classrooms, list_students, exit");
+                    System.out.println("Available commands: add_classroom, add_student, schedule_assignment, submit_assignment, list_classrooms, list_students, exit");
                     break;
             }
         }
@@ -187,10 +151,11 @@ public class Main {
     }
 }
 
+// Classroom class representing a virtual classroom
 class Classroom {
-    private String name;
-    private List<Student> students;
-    private List<Assignment> assignments;
+    private String name; // Name of the classroom
+    private List<Student> students; // List of students in the classroom
+    private List<Assignment> assignments; // List of assignments for the classroom
 
     public Classroom(String name) {
         this.name = name;
@@ -202,10 +167,6 @@ class Classroom {
         students.add(student);
     }
 
-    public boolean removeStudent(String id) {
-        return students.removeIf(student -> student.getId().equals(id));
-    }
-
     public List<Student> getStudents() {
         return students;
     }
@@ -215,9 +176,10 @@ class Classroom {
     }
 }
 
+// Student class representing a student
 class Student {
-    private String id;
-    private String name;
+    private String id; // Student ID
+    private String name; // Student name
 
     public Student(String id, String name) {
         this.id = id;
@@ -233,9 +195,10 @@ class Student {
     }
 }
 
+// Assignment class representing an assignment in a classroom
 class Assignment {
-    private String details;
-    private Set<String> submittedStudents;
+    private String details; // Details of the assignment
+    private Set<String> submittedStudents; // Set of student IDs who have submitted the assignment
 
     public Assignment(String details) {
         this.details = details;
